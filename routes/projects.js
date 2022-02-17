@@ -243,7 +243,7 @@ router.post(
  *         name: name
  *         schema:
  *           type: string
- *         description: To filter the list by project name
+ *         description: To filter the list by project name. (include)
  *       - in: query
  *         name: page
  *         schema:
@@ -258,6 +258,33 @@ router.post(
  *             schema:
  *               type: object
  *               properties:
+ *                 pagesUrl:
+ *                   type: object
+ *                   properties:
+ *                     previous:
+ *                       oneOf:
+ *                         - type: null
+ *                           description: previous page does not exist
+ *                           example: null
+ *                         - type: string
+ *                           description: url to previous page
+ *                           example: http://localhost:3000/news/?page=1
+ *                     next:
+ *                       oneOf:
+ *                         - type: string
+ *                           description: url to next page
+ *                           example: http://localhost:3000/news/?page=2
+ *                         - type: null
+ *                           description: next page does not exist
+ *                           example: null
+ *                 itemsCount:
+ *                   type: number
+ *                   description: count of entities in database
+ *                   example: 4
+ *                 totalPages:
+ *                   type: number
+ *                   description: count of available pages
+ *                   example: 1
  *                 data:
  *                   type: array
  *                   items:
