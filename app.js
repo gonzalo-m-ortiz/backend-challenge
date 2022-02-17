@@ -4,6 +4,7 @@ const httpLogger = require("morgan");
 const cors = require("cors");
 
 const indexRouter = require("./routes");
+const swaggerRouter = require("./docs/swagger");
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+app.use("/api/docs", swaggerRouter);
 app.use("/api", indexRouter);
 
 // url not hosted handler
