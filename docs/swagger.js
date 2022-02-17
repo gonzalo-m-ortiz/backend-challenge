@@ -12,6 +12,10 @@ const swaggerDefinition = {
   },
   servers: [
     {
+      url: "https://backend-challenge-estoes.herokuapp.com/api",
+      description: "Production server",
+    },
+    {
       url: "http://localhost:3000/api",
       description: "Development server",
     },
