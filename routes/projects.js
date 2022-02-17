@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 const projectsController = require("../controllers/projects");
+const projectsValidations = require("../middlewares/validations/projects");
 
 /**
  * @swagger
@@ -120,5 +121,61 @@ router.get("/:id", projectsController.getById);
  */
 
 router.delete("/:id", projectsController.remove);
+
+/**
+ * @swagger
+ * /projects:
+ *   post:
+ *     tags:
+ *       - projects
+ *     summary: Create or Update a project.
+ *     requestBody:
+ *       content:
+ *         'application/json':
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: integer
+ *                 description: Project id, if it's an update
+ *                 required: false
+ *                 example: 1
+ *               name:
+ *                 type: string
+ *                 required: true
+ *                 example: Landing Page
+ *               description:
+ *                 type: string
+ *                 required: false
+ *                 example: Landing Page for ONG
+ *               managerId:
+ *                 type: integer
+ *                 required: true
+ *                 example: 1
+ *               statusId:
+ *                 type: integer
+ *                 required: true
+ *                 example: 1
+ *     responses:
+ *       200:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   example: Project created/updated succesfully
+ *                 data:
+ *                   $ref: '#/components/schemas/Project'
+ *       404:
+ *         $ref: '#/components/responses/404'
+ */
+
+router.post(
+  "/",
+  projectsValidations.createUpdate,
+  projectsController.createUpdate
+);
 
 module.exports = router;

@@ -24,7 +24,21 @@ const remove = async (id) => {
   return rowsRemovedCount;
 };
 
+const create = async (project) => {
+  const projectCreated = await db.Projects.create(project);
+  return projectCreated;
+};
+
+const update = async (id, project) => {
+  const [rowsUpdatedCount] = await db.Projects.update(project, {
+    where: { id },
+  });
+  return rowsUpdatedCount;
+};
+
 module.exports = {
   getByIdWithAssociations,
   remove,
+  create,
+  update,
 };

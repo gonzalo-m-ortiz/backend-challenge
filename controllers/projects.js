@@ -18,7 +18,19 @@ const remove = async (req, res, next) => {
   }
 };
 
+const createUpdate = async (req, res, next) => {
+  try {
+    const project = await projectsService.createUpdate(req.body);
+    res
+      .status(200)
+      .json({ msg: "Project created/updated succesfully", data: project });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getById,
   remove,
+  createUpdate,
 };
