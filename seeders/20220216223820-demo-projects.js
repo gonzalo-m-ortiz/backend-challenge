@@ -6,45 +6,29 @@ module.exports = {
       "Projects",
       [
         {
-          name: "proj test 1",
-          description: "desc test 1",
+          name: "Landing Page",
+          description: "Landing page for ONG",
           managerId: 1,
           statusId: 1,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          name: "proj test 2",
+          name: "E-Commerce Shop",
+          description: "Online store for foreign client",
+          managerId: 1,
+          statusId: 1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: "CRM Linkroom",
           description: null,
-          managerId: 1,
-          statusId: 1,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          name: "proj test 3",
-          description: "desc test 3",
           managerId: 1,
           statusId: 2,
           createdAt: new Date(),
           updatedAt: new Date(),
-        },
-        {
-          name: "proj test 4",
-          description: "desc test 4",
-          managerId: 2,
-          statusId: 1,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          name: "proj test 5",
-          description: "desc test 5",
-          managerId: 2,
-          statusId: 1,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
+        }
       ],
       {}
     );

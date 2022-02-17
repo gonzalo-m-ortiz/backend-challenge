@@ -22,25 +22,7 @@ module.exports = {
           userId: 2,
           createdAt: new Date(),
           updatedAt: new Date(),
-        },
-        {
-          projectId: 4,
-          userId: 1,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          projectId: 4,
-          userId: 3,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          projectId: 5,
-          userId: 3,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
+        }
       ],
       {}
     );
