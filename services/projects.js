@@ -66,7 +66,7 @@ const createUpdate = async (project) => {
 };
 
 const getAllPaginated = async (req) => {
-  const resObj = paginate(req, 2, projectsRepository.getAllPaginated);
+  const resObj = paginate(req, 8, projectsRepository.getAllPaginated);
   return resObj;
 };
 
