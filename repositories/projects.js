@@ -19,6 +19,12 @@ const getByIdWithAssociations = async (id) => {
   return project;
 };
 
+const remove = async (id) => {
+  const rowsRemovedCount = await db.Projects.destroy({ where: { id } });
+  return rowsRemovedCount;
+};
+
 module.exports = {
   getByIdWithAssociations,
+  remove,
 };

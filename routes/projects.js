@@ -47,6 +47,18 @@ const projectsController = require("../controllers/projects");
  *             name:
  *               type: string
  *               example: Enabled
+ *   responses:
+ *     404:
+ *       description: Resource Not Found
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               error:
+ *                 type: string
+ *                 example: Project with id 1 not found
+ *
  */
 
 /**
@@ -73,8 +85,40 @@ const projectsController = require("../controllers/projects");
  *               properties:
  *                 data:
  *                   $ref: '#/components/schemas/Project'
+ *       404:
+ *         $ref: '#/components/responses/404'
  */
 
 router.get("/:id", projectsController.getById);
+
+/**
+ * @swagger
+ * /projects/{id}:
+ *   delete:
+ *     tags:
+ *       - projects
+ *     summary: Delete a project.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Project id.
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   example: Project removed succesfully
+ *       404:
+ *         $ref: '#/components/responses/404'
+ */
+
+router.delete("/:id", projectsController.remove);
 
 module.exports = router;
