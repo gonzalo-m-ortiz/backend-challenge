@@ -26,13 +26,17 @@ app.use((req, res, next) => {
 
 // error handler
 app.use((err, req, res, next) => {
-  // TODO - log error properly
-  console.error(err);
-
   if (!err.status) {
+    // TODO - log error properly
+    console.error(err);
     err.status = 500;
     err.message = "Internal Server Error";
   }
+
+  if (err.validationError) {
+    return res.status(err.status).json({ errors: err.validationError });
+  }
+
   res.status(err.status).json({ error: err.message });
 });
 
