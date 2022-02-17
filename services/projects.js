@@ -1,6 +1,7 @@
 const projectsRepository = require("../repositories/projects");
 const projectsStatusRepository = require("../repositories/projectsStatus");
 const usersRepository = require("../repositories/users");
+const { paginate } = require("../modules/pagination");
 
 const getById = async (id) => {
   const project = await projectsRepository.getByIdWithAssociations(id);
@@ -28,7 +29,7 @@ const createUpdate = async (project) => {
     const error = new Error(
       `User with id ${project.managerId} not found. Project not created`
     );
-    error.status = 404;
+    error.status = 400;
     throw error;
   }
   const projectStatus = await projectsStatusRepository.getById(
@@ -38,7 +39,7 @@ const createUpdate = async (project) => {
     const error = new Error(
       `Status with id ${project.statusId} not found. Project not created`
     );
-    error.status = 404;
+    error.status = 400;
     throw error;
   }
   // modify project
@@ -64,8 +65,14 @@ const createUpdate = async (project) => {
   return projectModified;
 };
 
+const getAllPaginated = async (req) => {
+  const resObj = paginate(req, 2, projectsRepository.getAllPaginated);
+  return resObj;
+};
+
 module.exports = {
   getById,
   remove,
   createUpdate,
+  getAllPaginated,
 };

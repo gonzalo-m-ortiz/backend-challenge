@@ -48,6 +48,33 @@ const projectsValidations = require("../middlewares/validations/projects");
  *             name:
  *               type: string
  *               example: Enabled
+ *
+ *     ValidationError:
+ *       type: object
+ *       properties:
+ *         errors:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               value:
+ *                 description: value provided
+ *                 example: 4
+ *               msg:
+ *                 type: string
+ *                 example: must be a string
+ *               param:
+ *                 type: string
+ *                 example: name
+ *               location:
+ *                 type: string
+ *                 example: body
+ *     BadRequest:
+ *       type: object
+ *       properties:
+ *         error:
+ *           type: string
+ *           example: Related entity with id 500 not found. Not updated
  *   responses:
  *     404:
  *       description: Resource Not Found
@@ -59,6 +86,18 @@ const projectsValidations = require("../middlewares/validations/projects");
  *               error:
  *                 type: string
  *                 example: Project with id 1 not found
+ *     ValidationError:
+ *       description: Validation Error
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/ValidationError'
+ *     BadRequest:
+ *       description: Validation Error
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/BadRequest'
  *
  */
 
@@ -168,6 +207,8 @@ router.delete("/:id", projectsController.remove);
  *                   example: Project created/updated succesfully
  *                 data:
  *                   $ref: '#/components/schemas/Project'
+ *       400:
+ *         $ref: '#/components/responses/ValidationError'
  *       404:
  *         $ref: '#/components/responses/404'
  */
@@ -177,5 +218,69 @@ router.post(
   projectsValidations.createUpdate,
   projectsController.createUpdate
 );
+
+/**
+ * @swagger
+ * /projects:
+ *   get:
+ *     tags:
+ *       - projects
+ *     summary: Get paginated list of projects.
+ *     parameters:
+ *       - in: query
+ *         name: name
+ *         schema:
+ *           type: string
+ *         description: To filter the list by project name
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *         description: Number of the page
+ *     responses:
+ *       200:
+ *         description: Paginated projects list.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: integer
+ *                         example: 1
+ *                       name:
+ *                         type: string
+ *                         nullable: true
+ *                         example: Landing Page
+ *                       createdAt:
+ *                         type: string
+ *                         example: 2022-02-07T11:05:33.000Z
+ *                       manager:
+ *                         type: object
+ *                         description: User entity
+ *                         properties:
+ *                           id:
+ *                             type: integer
+ *                             example: 1
+ *                           name:
+ *                             type: string
+ *                             example: Agustin Perez
+ *       400:
+ *         description: Validation Error or Bad Request (Multiple schemas)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               oneOf:
+ *                 - $ref: '#/components/schemas/ValidationError'
+ *                 - $ref: '#/components/schemas/BadRequest'
+ */
+
+router.get("/", projectsController.getAllPaginated);
 
 module.exports = router;

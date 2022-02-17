@@ -29,8 +29,18 @@ const createUpdate = async (req, res, next) => {
   }
 };
 
+const getAllPaginated = async (req, res, next) => {
+  try {
+    const resObj = await projectsService.getAllPaginated(req);
+    res.status(200).json(resObj);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getById,
   remove,
   createUpdate,
+  getAllPaginated,
 };

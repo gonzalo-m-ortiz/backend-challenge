@@ -36,9 +36,32 @@ const update = async (id, project) => {
   return rowsUpdatedCount;
 };
 
+const getAllPaginated = async (offset, limit, queryParams) => {
+  const whereClause = {};
+  if (queryParams.name) {
+    whereClause.name = { [db.Sequelize.Op.substring]: queryParams.name };
+  }
+  const countAndRows = await db.Projects.findAndCountAll({
+    where: whereClause,
+    attributes: ["id", "name", "createdAt"],
+    include: [
+      {
+        model: db.Users,
+        as: "manager",
+        attributes: ["id", "name"], //image
+      },
+    ],
+    order: [["createdAt", "DESC"]],
+    offset,
+    limit,
+  });
+  return countAndRows;
+};
+
 module.exports = {
   getByIdWithAssociations,
   remove,
   create,
   update,
+  getAllPaginated,
 };
