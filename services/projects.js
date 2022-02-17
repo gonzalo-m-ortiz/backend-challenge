@@ -24,7 +24,7 @@ const remove = async (id) => {
 
 const createUpdate = async (project) => {
   // validate associations
-  const user = await usersRepository.getById(project.managerId);
+  const user = await usersRepository.userExists(project.managerId);
   if (!user) {
     const error = new Error(
       `User with id ${project.managerId} not found. Project not created`
@@ -70,9 +70,45 @@ const getAllPaginated = async (req) => {
   return resObj;
 };
 
+const modifyProjectUsers = async (projectId, usersIds, assignUsers = true) => {
+  // check project exists
+  if (!(await projectsRepository.projectExists(projectId))) {
+    const error = new Error(`Project with id ${projectId} not found`);
+    error.status = 404;
+    throw error;
+  }
+  // normalize usersIds to an array
+  if (typeof usersIds === "number") {
+    usersIds = [usersIds];
+  }
+  // check users exists
+  await Promise.all(
+    usersIds.map(async (id) => {
+      if (!(await usersRepository.userExists(id))) {
+        const error = new Error(
+          `User with id ${id} not found. Project users not modified`
+        );
+        error.status = 400;
+        throw error;
+      }
+    })
+  );
+  // assign or unassign users to the project
+  await Promise.all(
+    usersIds.map(async (id) => {
+      if (assignUsers) {
+        await projectsRepository.addUser(projectId, id);
+      } else {
+        await projectsRepository.removeUser(projectId, id);
+      }
+    })
+  );
+};
+
 module.exports = {
   getById,
   remove,
   createUpdate,
   getAllPaginated,
+  modifyProjectUsers,
 };

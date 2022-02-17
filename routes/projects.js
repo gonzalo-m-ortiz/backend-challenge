@@ -295,4 +295,124 @@ router.post(
 
 router.get("/", projectsController.getAllPaginated);
 
+/**
+ * @swagger
+ * /projects/{projectId}/users:
+ *   patch:
+ *     tags:
+ *       - projects
+ *     summary: Assign user/s to a project
+ *     parameters:
+ *       - in: path
+ *         name: projectId
+ *         required: true
+ *         description: Project id
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       content:
+ *         'application/json':
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 oneOf:
+ *                   - type: array
+ *                     description: users id list
+ *                     required: true
+ *                     items:
+ *                       type: integer
+ *                       example: 1
+ *                   - type: integer
+ *                     description: user id
+ *                     required: true
+ *                     example: 1
+ *     responses:
+ *       200:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   example: Users assigned to the project
+ *       400:
+ *         description: Validation Error or Bad Request (Multiple schemas)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               oneOf:
+ *                 - $ref: '#/components/schemas/ValidationError'
+ *                 - $ref: '#/components/schemas/BadRequest'
+ *       404:
+ *         $ref: '#/components/responses/404'
+ */
+
+router.patch(
+  "/:projectId/users",
+  projectsValidations.modifyProjectUsers,
+  projectsController.modifyProjectUsers
+);
+
+/**
+ * @swagger
+ * /projects/{projectId}/users:
+ *   delete:
+ *     tags:
+ *       - projects
+ *     summary: Unassign user/s from a project
+ *     parameters:
+ *       - in: path
+ *         name: projectId
+ *         required: true
+ *         description: Project id
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       content:
+ *         'application/json':
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 oneOf:
+ *                   - type: array
+ *                     description: users id list
+ *                     required: true
+ *                     items:
+ *                       type: integer
+ *                       example: 1
+ *                   - type: integer
+ *                     description: user id
+ *                     required: true
+ *                     example: 1
+ *     responses:
+ *       200:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   example: Users unassigned from the project
+ *       400:
+ *         description: Validation Error or Bad Request (Multiple schemas)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               oneOf:
+ *                 - $ref: '#/components/schemas/ValidationError'
+ *                 - $ref: '#/components/schemas/BadRequest'
+ *       404:
+ *         $ref: '#/components/responses/404'
+ */
+
+router.delete(
+  "/:projectId/users",
+  projectsValidations.modifyProjectUsers,
+  projectsController.modifyProjectUsers
+);
+
 module.exports = router;

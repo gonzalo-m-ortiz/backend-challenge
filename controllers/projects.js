@@ -38,9 +38,24 @@ const getAllPaginated = async (req, res, next) => {
   }
 };
 
+const modifyProjectUsers = async (req, res, next) => {
+  try {
+    const assignUsers = req.method === "DELETE" ? false : true;
+    await projectsService.modifyProjectUsers(
+      req.params.projectId,
+      req.body.id,
+      assignUsers
+    );
+    res.status(200).json({ msg: "Project users modified" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getById,
   remove,
   createUpdate,
   getAllPaginated,
+  modifyProjectUsers,
 };

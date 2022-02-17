@@ -40,6 +40,20 @@ const statusId = body("statusId")
   .withMessage("must be an integer")
   .bail();
 
+const usersIds = body("id").custom((value) => {
+  if (typeof value === "number" || (Array.isArray(value) && value.length)) {
+    if (Array.isArray(value)) {
+      value.forEach((id) => {
+        if (typeof id !== "number") {
+          throw new Error("must be an integer or an integer array");
+        }
+      });
+    }
+    return true;
+  }
+  throw new Error("must be an integer or an integer array");
+});
+
 const createUpdate = [
   id,
   name,
@@ -49,6 +63,9 @@ const createUpdate = [
   executeValidation,
 ];
 
+const modifyProjectUsers = [usersIds, executeValidation];
+
 module.exports = {
   createUpdate,
+  modifyProjectUsers,
 };

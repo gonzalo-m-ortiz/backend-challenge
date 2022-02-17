@@ -66,10 +66,28 @@ const getAllPaginated = async (offset, limit, queryParams) => {
   return countAndRows;
 };
 
+const projectExists = async (id) => {
+  const project = await db.Projects.findByPk(id, {
+    attributes: ["id"],
+  });
+  return project ? true : false;
+};
+
+const addUser = async (projectId, userId) => {
+  await db.ProjectsUsers.create({ projectId, userId });
+};
+
+const removeUser = async (projectId, userId) => {
+  await db.ProjectsUsers.destroy({ where: { projectId, userId } });
+};
+
 module.exports = {
   getByIdWithAssociations,
   remove,
   create,
   update,
   getAllPaginated,
+  projectExists,
+  addUser,
+  removeUser,
 };
