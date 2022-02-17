@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Projects.belongsToMany(models.Users, {
         through: "ProjectsUsers",
+        as: "users",
       });
       Projects.belongsTo(models.ProjectsStatus, {
         foreignKey: "statusId",

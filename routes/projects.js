@@ -48,6 +48,18 @@ const projectsValidations = require("../middlewares/validations/projects");
  *             name:
  *               type: string
  *               example: Enabled
+ *         users:
+ *           type: array
+ *           description: Users assigned to the project
+ *           items:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: integer
+ *                 example: 2
+ *               name:
+ *                 type: string
+ *                 example: Fabricio Perez
  *
  *     ValidationError:
  *       type: object

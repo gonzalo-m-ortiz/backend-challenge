@@ -14,6 +14,14 @@ const getByIdWithAssociations = async (id) => {
         as: "status",
         attributes: ["id", "name"],
       },
+      {
+        model: db.Users,
+        as: "users",
+        attributes: ["id", "name"],
+        through: {
+          attributes: [],
+        },
+      },
     ],
   });
   return project;
