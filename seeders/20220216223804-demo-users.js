@@ -6,17 +6,17 @@ module.exports = {
       "Users",
       [
         {
-          name: "user test 1",
+          name: "Agustin Perez",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          name: "user test 2",
+          name: "Fabricio Chavez",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          name: "user test 3",
+          name: "Pedro Garcia",
           createdAt: new Date(),
           updatedAt: new Date(),
         },

@@ -6,13 +6,13 @@ module.exports = {
       "ProjectsStatus",
       [
         {
-          name: "enabled",
-          description: "desc status 1",
+          name: "Enabled",
+          description: "The project is active",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          name: "disabled",
+          name: "Disabled",
           description: null,
           createdAt: new Date(),
           updatedAt: new Date(),
